@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+  <link rel="manifest" href="assets/favicon/site.webmanifest">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>What stem?</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+  <style>
+    html {
+      box-sizing: border-box;
+    }
+
+    *,
+    *:before,
+    *:after {
+      box-sizing: inherit;
+    }
+  </style>
+</head>
+
+<body>
+  <div style="min-height: 60vh; position: relative;">
+    <div class="col-3" style="position: absolute; bottom: 0; z-index: 1; left: 0;">
+      <h3 class="mb-1">WHAT STEM?</h3>
+    </div>
+    <div class="col-3 mb-2" style="position: absolute; bottom: 0; z-index: 1; right: 0;">
+      <div class="input-group">
+        <input class="form-control" type="number" id="headtubeAngle" step="0.1" name="headtube_angle" required
+          value="72" min="0" max="90" aria-label="Headtube Angle" aria-describedby="headtubeAngleLabel">
+      </div>
+    </div>
+    <div id="container" style="min-height: inherit;"></div>
+  </div>
+  <div class="container my-5">
+    <div class="d-flex justify-content-center overflow-auto gap-3">
+      <div class="card" style="min-width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">Stem 1</h5>
+          <p class="card-text">Length 110mm | Angle 7°</p>
+          <p class="card-text">Reach 112mm | Stack 9mm</p>
+          <p class="card-text">Effective Reach 112mm | Stack 9mm</p>
+          <button class="btn btn-danger">Remove</a>
+        </div>
+      </div>
+
+      <div class="card" style="min-width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">Add stem to comparison</h5>
+          <form>
+            <div class="mb-2">
+              <label for="length" class="form-label">Length (mm)</label>
+              <input type="number" step="1" class="form-control" id="length">
+            </div>
+            <div class="mb-3">
+              <label for="angle" class="form-label">Angle °</label>
+              <input type="number" step="1" class="form-control" id="angle">
+            </div>
+            <button type="submit" type="button" class="btn btn-primary">Add</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="new-stem-form-modal" tabindex="-1" aria-labelledby="new-stem-form" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="new-stem-form">Add stem to comparison</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="length" class="form-label">Length (mm)</label>
+              <input type="number" step="1" class="form-control" id="length">
+            </div>
+            <div class="mb-3">
+              <label for="angle" class="form-label">Angle °</label>
+              <input type="number" step="1" class="form-control" id="angle">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" type="button" class="btn btn-primary">Add</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+    crossorigin="anonymous"></script>
+
+  <script type="module">
+    import * as Konva from "https://unpkg.com/konva@9/konva.min.js";
+    import { Application, Controller } from "https://unpkg.com/@hotwired/stimulus/dist/stimulus.js"
+    window.Stimulus = Application.start()
+
+    Stimulus.register("stems", class extends Controller {
+      static targets = ["name", "output"]
+
+      add() {
+        this.outputTarget.textContent =
+          `Hello, ${this.nameTarget.value}!`
+      }
+    })
+  </script>
+  <script src="index.js"></script>
+</body>
+
+</html>
