@@ -37,11 +37,6 @@ class Stem {
     return { length: this.length, angle: this.angle }
   }
 
-  reach = 123
-  stack = 123
-  effectiveReach = 123
-  effectiveStack = 123
-
   isEqual(stem) {
       return this.length === stem.length && this.angle === stem.angle;
   };

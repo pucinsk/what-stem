@@ -1,5 +1,17 @@
 import { Controller } from "stimulus.js"
 import Stem from "../models/stem.js"
+import { degreesToRadians } from "../utils.js"
+
+function StemCalculations(stem, headTubeAngle) {
+    const effectiveAngle = degreesToRadians(Number(headTubeAngle) + stem.angle)
+
+    return {
+        reach: stem.length * Math.sin(degreesToRadians(stem.angle)),
+        stack: stem.length * Math.cos(degreesToRadians(stem.angle)),
+        effectiveReach: stem.length * Math.sin(effectiveAngle),
+        effectiveStack: stem.length * Math.cos(effectiveAngle),
+    }
+}
 
 class StemsController extends Controller {
     static targets = [
@@ -37,11 +49,22 @@ class StemsController extends Controller {
         })
     }
 
+    updateCalc() {
+        Stem.all().forEach((stem) => {
+            const {effectiveReach, effectiveStack} = StemCalculations(stem, this.headTubeAngleTarget.value)
+
+            const card = document.getElementById(stem.presenter.name)
+            card.getElementsByClassName("e-reach").item(0).innerText = effectiveReach.toFixed(2)
+            card.getElementsByClassName("e-stack").item(0).innerText = effectiveStack.toFixed(2)
+
+        })
+    }
+
     draw(stem) {
         const tiltAngle = this.headTubeAngleTarget.value
         const y0 = stage.height() / 2;
         const x0 = y0 / Math.tan(tiltAngle * Math.PI / 180)
-        const shape = stem.presenter.present( { x0, y0, tiltAngle } )
+        const shape = stem.presenter.present({ x0, y0, tiltAngle })
         this.group.add(shape)
     }
 
@@ -59,17 +82,15 @@ class StemsController extends Controller {
     }
 
     #addCard(stem) {
-        const { length, angle, reach,
-            stack,
-            effectiveReach,
-            effectiveStack } = stem
+        const { length, angle } = stem
+        const {reach, stack, effectiveReach, effectiveStack} = StemCalculations(stem, this.headTubeAngleTarget.value)
         const cardHTML = `
-            <div class="card" style="min-width: 18rem;" data-stem-length="${length}" data-stem-angle="${angle}">
+            <div class="card" style="min-width: 18rem;" data-stem-length="${length}" data-stem-angle="${angle}" id="${stem.presenter.name}">
                 <div class="card-body">
                 <h5 class="card-title">${stem.presenter.name}</h5>
                 <p class="card-text">Length ${length}mm | Angle ${angle}°</p>
-                <p class="card-text">Reach ${reach}mm | Stack ${stack}mm</p>
-                <p class="card-text">Effective Reach ${effectiveReach}mm | Stack ${effectiveStack}mm</p>
+                <p class="card-text">Reach ${reach.toFixed(2)}mm | Stack ${stack.toFixed(2)}mm</p>
+                <p class="card-text">Effective Reach <span class="e-reach">${effectiveReach.toFixed(2)}</span>mm | Stack <span class="e-stack">${effectiveStack.toFixed(2)}</span>mm</p>
                 <button data-action="stems#remove" class="btn btn-danger">Remove</a>
                 </div>
             </div>
