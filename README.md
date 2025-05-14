@@ -1,7 +1,9 @@
 # 🚲 What Stem?
 https://pucinsk.github.io/what-stem/
 
-**What Stem?** is a simple yet powerful tool that helps cyclists compare different bicycle stem options in terms of **effective reach**, **stack**, and **angle**. It also provides a **visual overlay** to understand how stems differ in real-world dimensions.
+**What Stem?** is a simple yet useful tool that helps cyclists compare different bicycle stem options in terms of **effective reach**, **stack**, and **angle**. It also provides a **visual overlay** to understand how stems differ in real-world dimensions.
+
+**What Stem?** has been inspired by well known handlebars comparison tool [https://whatbars.com/](https://whatbars.com/)
 
 ![image](https://github.com/user-attachments/assets/d4e4b0c4-b84b-4095-9692-041aa0871ca8)
 
